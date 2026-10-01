@@ -1,0 +1,6 @@
+# Dados (baixar no Kaggle, não vão para o GitHub)
+*.csv
+
+# Arquivos gerados pelo Python
+__pycache__/
+*.pyc
