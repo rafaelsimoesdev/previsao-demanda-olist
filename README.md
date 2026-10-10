@@ -2,7 +2,7 @@
 
 Projeto de Machine Learning para prever o volume diário de pedidos de um e-commerce brasileiro, usando dados reais da Olist.
 
-**Autor:** Rafael · Estudante de Análise e Desenvolvimento de Sistemas (FMU), com experiência em operação logística (warehouse/fulfillment).
+**Autor:** Rafael Simões · Estudante de Análise e Desenvolvimento de Sistemas (FMU), com experiência em operação logística (warehouse/fulfillment).
 
 ---
 
@@ -34,6 +34,7 @@ Cada etapa está em um arquivo separado, mostrando a evolução do raciocínio:
 | Etapa | Arquivo | O que foi feito | Erro médio (MAE) |
 |---|---|---|---|
 | 1 | `semana1_eda_olist.py` | Exploração dos dados | — |
+| 2 | — | Estudo dos conceitos (sem script) | — |
 | 3 | `semana3_train_test.py` | Primeiro modelo (regressão linear), com treino/teste e baseline | 60,5 pedidos |
 | 4 | `semana4_comparar_modelos.py` | Árvore e Random Forest. Ficaram piores que o baseline (overfitting e falta de pista de tendência) | 61,3 pedidos |
 | 4 | `semana4b_modelos_melhorados.py` | Correções: pista de tendência e limite de profundidade das árvores | 19,7 pedidos |
