@@ -39,15 +39,28 @@ Cada etapa está em um arquivo separado, mostrando a evolução do raciocínio:
 | 4 | `semana4_comparar_modelos.py` | Árvore e Random Forest. Ficaram piores que o baseline (overfitting e falta de pista de tendência) | 61,3 pedidos |
 | 4 | `semana4b_modelos_melhorados.py` | Correções: pista de tendência e limite de profundidade das árvores | 19,7 pedidos |
 | 5 | `semana5_gradient_boosting.py` | Gradient Boosting contra Random Forest | 17,8 pedidos |
-| 6 | `semana6_pipeline_validacao.py` | Pipeline e validação cruzada em 5 rodadas | **21,7 pedidos** |
+| 6 | `semana6_pipeline_validacao.py` | Pipeline e validação cruzada embaralhada em 5 rodadas | 21,7 pedidos |
+| 7 | `semana7_validacao_temporal.py` | Validação temporal: treina só com o passado e prevê os 60 dias seguintes | **63,3 pedidos** |
 
-**Baseline** (prever sempre a média): 63,5 pedidos de erro.
+**Baseline** das etapas 3 a 6 (prever sempre a média): 63,5 pedidos de erro. Os baselines da etapa 7 estão em [Resultado final](#resultado-final).
 
 ## Resultado final
 
-O modelo escolhido foi o **Gradient Boosting**. Na validação cruzada (5 rodadas), ele errou em média **21,7 pedidos por dia**, contra cerca de 23 do Random Forest e 63,5 do baseline. Ou seja, erra cerca de **3 vezes menos** que simplesmente usar a média.
+Na validação cruzada embaralhada (Semana 6), o Gradient Boosting errava **21,7 pedidos por dia**. Mas essa validação misturava os dias e deixava o modelo treinar com datas do futuro, algo impossível na operação real.
 
-O erro variou de 17,8 a 30,3 pedidos entre as rodadas. Isso mostra que testar com uma divisão só pode enganar, e que alguns dias, como a Black Friday, são bem mais difíceis de prever.
+Na Semana 7, refiz o teste do jeito que funcionaria na prática: cada rodada treina só com o passado e prevê os 60 dias seguintes (5 rodadas, de nov/2017 a ago/2018).
+
+| Modelo | Erro médio (MAE) |
+|---|---|
+| Semana passada (baseline: mesmo dia, 7 dias antes) | **53,3 pedidos** |
+| Random Forest | 63,3 pedidos |
+| Gradient Boosting | 67,5 pedidos |
+| Média do passado | 93,4 pedidos |
+
+**Resultado honesto:** nenhum modelo superou o baseline "mesmo dia da semana passada". Dois motivos aparecem nas rodadas:
+
+- **Árvores não continuam a tendência.** Em 2018 o volume continuou crescendo, e o modelo não consegue prever valores acima do que viu no treino. Na rodada de jan–fev/2018, os modelos erraram cerca de 93 pedidos por dia, contra 35 do baseline.
+- **Eventos fora do padrão.** Na 1ª rodada, que inclui a Black Friday, todos erraram muito (de 86 a 114 pedidos), porque o modelo nunca tinha visto um pico assim no treino.
 
 ## O que aprendi
 
@@ -55,11 +68,12 @@ O erro variou de 17,8 a 30,3 pedidos entre as rodadas. Isso mostra que testar co
 - **Modelo potente sem controle decora.** A árvore de decisão sem limite de profundidade errou 96,3 pedidos, pior que o baseline, porque decorou os dias do treino (overfitting).
 - **Sempre comparar com um baseline.** Sem ele, não dá pra saber se o modelo está ajudando de verdade.
 - **Uma divisão de teste só não basta.** A validação cruzada mostrou um erro mais realista que o teste único.
+- **Em série temporal, validação embaralhada engana.** Ao testar só no futuro, o erro foi quase 3 vezes maior que o da Semana 6, e o modelo deixou de bater um baseline simples. Esse é o número que importaria na operação.
 
 ## Limitações e próximos passos
 
-- **Prever o futuro:** a validação usada embaralha os dias. Para medir a previsão de dias futuros de verdade, o próximo passo é uma validação por período (treinar no passado e testar no período seguinte).
-- **Modelos de árvore não extrapolam:** eles não conseguem continuar a tendência depois do fim dos dados.
+- **Usar o passado recente como pista:** o volume de 7 e 14 dias antes, que já sozinho foi o melhor baseline.
+- **Modelar a tendência à parte:** como as árvores não extrapolam, separar o crescimento (por exemplo, com uma regressão linear) e deixar a árvore prever só o que sobra.
 - **Datas promocionais:** adicionar uma pista de Black Friday e outras datas de pico deve reduzir os maiores erros.
 - **Fim da coleta:** os últimos dias da base já mostram queda causada pelo encerramento da coleta, e não pela operação.
 
@@ -72,7 +86,7 @@ O erro variou de 17,8 a 30,3 pedidos entre as rodadas. Isso mostra que testar co
 2. Baixe o `olist_orders_dataset.csv` no Kaggle e coloque na pasta do projeto.
 3. Rode qualquer arquivo, por exemplo:
    ```
-   python semana6_pipeline_validacao.py
+   python semana7_validacao_temporal.py
    ```
 
 ## Tecnologias
