@@ -31,12 +31,11 @@ O objetivo deste projeto é prever o **volume diário de pedidos** a partir da d
 
 ## Como o projeto evoluiu
 
-Cada etapa está em um arquivo separado, mostrando a evolução do raciocínio:
+Cada arquivo leva o número da semana de estudo em que foi feito, mostrando a evolução do raciocínio. A semana 2 não gerou script.
 
-| Etapa | Arquivo | O que foi feito | Erro médio (MAE) |
+| Semana | Arquivo | O que foi feito | Erro médio (MAE) |
 |---|---|---|---|
 | 1 | `semana1_eda_olist.py` | Exploração dos dados | — |
-| 2 | — | Estudo dos conceitos (sem script) | — |
 | 3 | `semana3_train_test.py` | Primeiro modelo (regressão linear), com treino/teste e baseline | 60,5 pedidos |
 | 4 | `semana4_comparar_modelos.py` | Árvore e Random Forest. Ficaram piores que o baseline (overfitting e falta de pista de tendência) | 61,3 pedidos |
 | 4 | `semana4b_modelos_melhorados.py` | Correções: pista de tendência e limite de profundidade das árvores | 19,7 pedidos |
@@ -44,7 +43,7 @@ Cada etapa está em um arquivo separado, mostrando a evolução do raciocínio:
 | 6 | `semana6_pipeline_validacao.py` | Pipeline e validação cruzada embaralhada em 5 rodadas | 21,7 pedidos |
 | 7 | `semana7_validacao_temporal.py` | Validação temporal: treina só com o passado e prevê os 60 dias seguintes | **63,3 pedidos** |
 
-**Baseline** das etapas 3 a 6 (prever sempre a média): 63,5 pedidos de erro. Os baselines da etapa 7 estão em [Resultado final](#resultado-final).
+**Baseline** das semanas 3 a 6 (prever sempre a média): 63,5 pedidos de erro. Os baselines da semana 7 estão em [Resultado final](#resultado-final).
 
 ## Resultado final
 
