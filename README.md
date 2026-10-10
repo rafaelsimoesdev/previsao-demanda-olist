@@ -26,6 +26,7 @@ O objetivo deste projeto é prever o **volume diário de pedidos** a partir da d
 - **Tendência:** o volume cresceu de forma consistente ao longo de 2017 e 2018.
 - **Padrão semanal:** os dias úteis concentram mais pedidos que o fim de semana.
 - **Evento:** o maior pico foi em 24/11/2017, com 1.176 pedidos contra uma média de 128 por dia. É a Black Friday, quase 10 vezes o volume normal.
+![Volume diário de pedidos da Olist, com o pico da Black Friday](imagens/serie_diaria.png)
 
 ## Como o projeto evoluiu
 
@@ -61,6 +62,9 @@ Na Semana 7, refiz o teste do jeito que funcionaria na prática: cada rodada tre
 
 - **Árvores não continuam a tendência.** Em 2018 o volume continuou crescendo, e o modelo não consegue prever valores acima do que viu no treino. Na rodada de jan–fev/2018, os modelos erraram cerca de 93 pedidos por dia, contra 35 do baseline.
 - **Eventos fora do padrão.** Na 1ª rodada, que inclui a Black Friday, todos erraram muito (de 86 a 114 pedidos), porque o modelo nunca tinha visto um pico assim no treino.
+![Previsto x real nos últimos 60 dias da base](imagens/previsto_vs_real.png)
+
+*Última rodada (jul–ago/2018): o modelo acompanha o padrão semanal, mas fica abaixo dos picos. A queda nos últimos dias vem do encerramento da coleta de dados, não da operação.*
 
 ## O que aprendi
 
